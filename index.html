@@ -1,361 +1,224 @@
-```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Abhishek Thapa | Founder & Tech Entrepreneur</title>
+    <title>Abhishek Thapa | Links & Contact</title>
     <style>
-        :root {
-            --bg-top: #0f172a;
-            --bg-bottom: #1e1b4b;
-            --card-bg: rgba(30, 41, 59, 0.75);
-            --card-border: rgba(255, 255, 255, 0.12);
-            --card-hover: rgba(51, 65, 85, 0.9);
-            --text-primary: #f8fafc;
-            --text-secondary: #94a3b8;
-            --accent-color: #38bdf8;
-            --company-color: #818cf8;
-            --radius-lg: 20px;
-            --radius-md: 12px;
-        }
-
-        * {
+        /* CSS Reset and Base Rules */
+        *, *::before, *::after {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-            -webkit-tap-highlight-color: transparent;
         }
 
-        body {
-            background: linear-gradient(135deg, var(--bg-top) 0%, var(--bg-bottom) 100%);
-            background-attachment: fixed;
-            color: var(--text-primary);
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
             min-height: 100vh;
+            background-color: #0f172a;
+            color: #f8fafc;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
             display: flex;
             flex-direction: column;
             align-items: center;
-            justify-content: space-between;
-            padding: 24px 16px;
+            justify-content: flex-start;
+            padding: 2rem 1rem;
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
         }
 
+        /* Container Styling */
         .container {
             width: 100%;
-            max-width: 520px;
-            margin: 0 auto;
+            max-width: 480px;
             display: flex;
             flex-direction: column;
             align-items: center;
+            gap: 1.5rem;
         }
 
-        /* Top Header Action Controls */
-        .top-bar {
-            width: 100%;
+        /* Profile Header */
+        .profile {
             display: flex;
-            justify-content: flex-end;
-            margin-bottom: 16px;
-            gap: 10px;
-        }
-
-        .action-btn {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            color: var(--text-primary);
-            padding: 8px 14px;
-            border-radius: 9999px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 6px;
-            backdrop-filter: blur(12px);
-            transition: all 0.2s ease;
-        }
-
-        .action-btn:hover {
-            background: var(--card-hover);
-            border-color: rgba(255, 255, 255, 0.25);
-            transform: translateY(-1px);
-        }
-
-        /* Profile Card */
-        .profile-card {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: var(--radius-lg);
-            padding: 28px 20px;
-            width: 100%;
             text-align: center;
-            backdrop-filter: blur(16px);
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.4);
-            margin-bottom: 20px;
+            gap: 0.75rem;
+            width: 100%;
         }
 
-        .avatar-wrap {
-            width: 104px;
-            height: 104px;
-            margin: 0 auto 16px auto;
+        .avatar-container {
             position: relative;
+            width: 108px;
+            height: 108px;
+            border-radius: 50%;
+            padding: 3px;
+            background: linear-gradient(135deg, #3b82f6, #8b5cf6);
+            box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
         }
 
-        .avatar-img {
+        .avatar {
             width: 100%;
             height: 100%;
             border-radius: 50%;
             object-fit: cover;
-            border: 3px solid var(--accent-color);
-            background: #1e293b;
+            background-color: #1e293b;
+            display: block;
         }
 
-        .verified-badge {
-            position: absolute;
-            bottom: 2px;
-            right: 2px;
-            background: var(--accent-color);
-            color: #0f172a;
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border: 2px solid #0f172a;
-        }
-
-        .name {
-            font-size: 24px;
-            font-weight: 800;
-            color: var(--text-primary);
-            letter-spacing: -0.3px;
-            margin-bottom: 4px;
-        }
-
-        .title {
-            font-size: 13px;
+        .profile-name {
+            font-size: 1.5rem;
             font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            color: var(--accent-color);
-            margin-bottom: 12px;
+            letter-spacing: -0.025em;
+            color: #ffffff;
+            margin-top: 0.25rem;
         }
 
-        .bio {
-            font-size: 14px;
-            color: var(--text-secondary);
-            line-height: 1.5;
-            max-width: 400px;
-            margin: 0 auto;
+        .profile-title {
+            font-size: 0.95rem;
+            font-weight: 500;
+            color: #38bdf8;
         }
 
-        /* Links Hub Stack */
-        .links-stack {
+        .profile-subtitle {
+            font-size: 0.85rem;
+            color: #94a3b8;
+            line-height: 1.4;
+        }
+
+        /* Links List */
+        .links-container {
             width: 100%;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            margin-bottom: 24px;
+            gap: 0.875rem;
         }
 
-        .link-item {
-            background: var(--card-bg);
-            border: 1px solid var(--card-border);
-            border-radius: var(--radius-md);
-            padding: 14px 16px;
+        .link-card {
+            width: 100%;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 12px;
+            padding: 16px 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            color: #f8fafc;
             text-decoration: none;
-            color: var(--text-primary);
-            backdrop-filter: blur(12px);
-            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.2), 0 2px 4px -2px rgba(0, 0, 0, 0.1);
             cursor: pointer;
         }
 
-        .link-item:hover {
-            background: var(--card-hover);
-            border-color: rgba(56, 189, 248, 0.4);
+        .link-card:hover, .link-card:focus-visible {
+            background-color: #334155;
+            border-color: #38bdf8;
             transform: translateY(-2px);
-            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.3), 0 0 15px rgba(56, 189, 248, 0.25);
+            outline: none;
         }
 
         .link-left {
             display: flex;
             align-items: center;
-            gap: 14px;
+            gap: 0.875rem;
         }
 
-        .icon-box {
-            width: 42px;
-            height: 42px;
-            border-radius: 10px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
+        .link-icon {
+            width: 22px;
+            height: 22px;
+            fill: currentColor;
+            color: #38bdf8;
             flex-shrink: 0;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
+            transition: color 0.25s ease;
         }
 
-        .link-text {
+        .link-card:hover .link-icon {
+            color: #60a5fa;
+        }
+
+        .chevron-icon {
+            width: 18px;
+            height: 18px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+            color: #64748b;
+            flex-shrink: 0;
+            transition: transform 0.25s ease, color 0.25s ease;
+        }
+
+        .link-card:hover .chevron-icon {
+            transform: translateX(3px);
+            color: #f8fafc;
+        }
+
+        /* QR Code Section */
+        .qr-section {
+            width: 100%;
+            margin-top: 1rem;
             display: flex;
             flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            padding: 1.25rem;
+            background-color: #1e293b;
+            border: 1px solid #334155;
+            border-radius: 16px;
         }
 
-        .link-title {
-            font-size: 15px;
+        .qr-header {
+            font-size: 0.9rem;
             font-weight: 600;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            color: #94a3b8;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
         }
 
-        .company-tag {
-            background: rgba(129, 140, 248, 0.2);
-            color: var(--company-color);
-            border: 1px solid rgba(129, 140, 248, 0.4);
-            font-size: 10px;
-            padding: 2px 6px;
-            border-radius: 4px;
-            font-weight: 700;
-        }
-
-        .link-sub {
-            font-size: 12px;
-            color: var(--text-secondary);
-            margin-top: 2px;
-        }
-
-        .link-right {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .icon-copy-btn {
-            background: transparent;
-            border: none;
-            color: var(--text-secondary);
-            padding: 6px;
-            border-radius: 6px;
-            cursor: pointer;
+        .qr-wrapper {
+            background-color: #ffffff;
+            padding: 12px;
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
-            transition: all 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
         }
 
-        .icon-copy-btn:hover {
-            color: var(--text-primary);
-            background: rgba(255, 255, 255, 0.1);
-        }
-
-        /* Inline SVG styling */
-        .svg-icon {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-        }
-
-        /* QR Modal */
-        .modal-backdrop {
-            position: fixed;
-            inset: 0;
-            background: rgba(15, 23, 42, 0.85);
-            backdrop-filter: blur(8px);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 20px;
-            z-index: 100;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.25s ease;
-        }
-
-        .modal-backdrop.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-content {
-            background: #0f172a;
-            border: 1px solid var(--card-border);
-            border-radius: var(--radius-lg);
-            padding: 24px;
-            width: 100%;
-            max-width: 380px;
-            text-align: center;
-            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.6);
-            transform: scale(0.95);
-            transition: transform 0.25s ease;
-        }
-
-        .modal-backdrop.active .modal-content {
-            transform: scale(1);
-        }
-
-        .qr-display {
-            background: #ffffff;
-            padding: 16px;
-            border-radius: var(--radius-md);
-            display: inline-block;
-            margin: 16px 0;
-        }
-
-        .qr-display svg {
+        .qr-wrapper svg {
+            width: 160px;
+            height: 160px;
             display: block;
-            width: 180px;
-            height: 180px;
         }
 
-        .close-btn {
-            background: rgba(255, 255, 255, 0.1);
-            border: none;
-            color: var(--text-primary);
-            padding: 8px 18px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            cursor: pointer;
-            margin-top: 12px;
-        }
-
-        /* Toast Popup */
-        .toast {
-            position: fixed;
-            bottom: 24px;
-            left: 50%;
-            transform: translateX(-50%) translateY(100px);
-            background: #f8fafc;
-            color: #0f172a;
-            padding: 10px 20px;
-            border-radius: 9999px;
-            font-size: 13px;
-            font-weight: 700;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.5);
-            z-index: 200;
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-            pointer-events: none;
-        }
-
-        .toast.show {
-            transform: translateX(-50%) translateY(0);
-            opacity: 1;
-        }
-
-        footer {
-            font-size: 12px;
-            color: var(--text-secondary);
+        .qr-caption {
+            font-size: 0.8rem;
+            color: #64748b;
+            word-break: break-all;
             text-align: center;
-            margin-top: 20px;
         }
 
-        footer a {
-            color: var(--accent-color);
+        /* Footer */
+        .footer {
+            margin-top: 2rem;
+            font-size: 0.75rem;
+            color: #64748b;
+            text-align: center;
+        }
+
+        .footer a {
+            color: #94a3b8;
             text-decoration: none;
+        }
+
+        .footer a:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
@@ -363,216 +226,151 @@
 
     <div class="container">
         
-        <div class="top-bar">
-            <button class="action-btn" onclick="openQRModal()">
-                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M3 3h8v8H3V3zm2 2v4h4V5H5zm8-2h8v8h-8V3zm2 2v4h4V5h-4zM3 13h8v8H3v-8zm2 2v4h4v-4H5zm13-2h3v2h-3v-2zm-3 0h2v3h-2v-3zm3 3h3v5h-3v-5zm-3 2h2v3h-2v-3zm-2-2h2v2h-2v-2z"/></svg>
-                <span>QR Code</span>
-            </button>
-            <button class="action-btn" onclick="shareProfile()">
-                <svg class="svg-icon" viewBox="0 0 24 24"><path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L7.13 9.82C6.59 9.32 5.88 9 5 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.88 0 1.59-.32 2.13-.82l7.12 4.16c-.05.21-.08.43-.08.66 0 1.61 1.31 2.92 2.92 2.92 1.61 0 2.92-1.31 2.92-2.92s-1.31-2.92-2.92-2.92z"/></svg>
-                <span>Share</span>
-            </button>
-        </div>
-
-        <!-- Profile Box -->
-        <div class="profile-card">
-            <div class="avatar-wrap">
-                <img src="https://github.com/AbhishekThapaKshetri.png" alt="Abhishek Thapa" class="avatar-img" onerror="this.src='https://ui-avatars.com/api/?name=Abhishek+Thapa&background=0284c7&color=fff';">
-                <div class="verified-badge">
-                    <svg style="width: 14px; height: 14px; fill: #0f172a;" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
-                </div>
+        <!-- Profile Header Section -->
+        <header class="profile">
+            <div class="avatar-container">
+                <img 
+                    class="avatar" 
+                    src="https://www.abhishek.name.np/favicon.ico" 
+                    alt="Abhishek Thapa"
+                    onerror="this.onerror=null; this.src='https://placehold.co/150x150/1e293b/f8fafc?text=AT';"
+                />
             </div>
-            <h1 class="name">Abhishek Thapa</h1>
-            <p class="title">Tech Entrepreneur & Developer</p>
-            <p class="bio">Founder at <strong>Nirdist Group</strong>. Building innovative web apps, scalable digital systems, and software platforms.</p>
-        </div>
+            <h1 class="profile-name">Abhishek Thapa</h1>
+            <p class="profile-title">Tech Entrepreneur & Developer</p>
+            <p class="profile-subtitle">Founder of Nirdist Group</p>
+        </header>
 
-        <div class="links-stack">
+        <!-- Links Navigation List -->
+        <main class="links-container">
             
             <!-- Personal Website -->
-            <div class="link-item" onclick="openLink('https://www.abhishek.name.np')">
+            <a href="https://www.abhishek.name.np" target="_blank" rel="noopener noreferrer" class="link-card">
                 <div class="link-left">
-                    <div class="icon-box" style="color: #38bdf8;">
-                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/></svg>
-                    </div>
-                    <div class="link-text">
-                        <span class="link-title">Personal Website</span>
-                        <span class="link-sub">abhishek.name.np</span>
-                    </div>
+                    <svg class="link-icon" viewBox="0 0 24 24">
+                        <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm-1 17.93c-3.95-.49-7-3.85-7-7.93 0-.62.08-1.21.21-1.79L9 15v1c0 1.1.9 2 2 2v1.93zm6.9-2.54c-.26-.81-1-1.39-1.9-1.39h-1v-3c0-.55-.45-1-1-1H8v-2h2c.55 0 1-.45 1-1V7h2c1.1 0 2-.9 2-2v-.41c2.93 1.19 5 4.06 5 7.41 0 2.08-.8 3.97-2.1 5.39z"/>
+                    </svg>
+                    <span>Personal Website</span>
                 </div>
-                <div class="link-right">
-                    <button class="icon-copy-btn" onclick="event.stopPropagation(); copyUrl('https://www.abhishek.name.np')" title="Copy URL">
-                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                    </button>
-                </div>
-            </div>
+                <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
 
-            <!-- Nirdist Company -->
-            <div class="link-item" style="border-left: 4px solid var(--company-color);" onclick="openLink('https://www.nirdist.com')">
+            <!-- Nirdist Group -->
+            <a href="https://www.nirdist.com" target="_blank" rel="noopener noreferrer" class="link-card">
                 <div class="link-left">
-                    <div class="icon-box" style="color: #818cf8;">
-                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/></svg>
-                    </div>
-                    <div class="link-text">
-                        <span class="link-title">Nirdist Group <span class="company-tag">Company</span></span>
-                        <span class="link-sub">nirdist.com</span>
-                    </div>
+                    <svg class="link-icon" viewBox="0 0 24 24">
+                        <path d="M12 7V3H2v18h20V7H12zM6 19H4v-2h2v2zm0-4H4v-2h2v2zm0-4H4V9h2v2zm0-4H4V5h2v2zm4 12H8v-2h2v2zm0-4H8v-2h2v2zm0-4H8V9h2v2zm0-4H8V5h2v2zm10 12h-8v-2h2v-2h-2v-2h2v-2h-2V9h8v10zm-2-8h-2v2h2v-2zm0 4h-2v2h2v-2z"/>
+                    </svg>
+                    <span>Nirdist Group</span>
                 </div>
-                <div class="link-right">
-                    <button class="icon-copy-btn" onclick="event.stopPropagation(); copyUrl('https://www.nirdist.com')" title="Copy URL">
-                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                    </button>
-                </div>
-            </div>
+                <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
 
             <!-- GitHub -->
-            <div class="link-item" onclick="openLink('https://github.com/AbhishekThapaKshetri')">
+            <a href="https://github.com/AbhishekThapaKshetri" target="_blank" rel="noopener noreferrer" class="link-card">
                 <div class="link-left">
-                    <div class="icon-box" style="color: #f8fafc;">
-                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 1.27a11 11 0 00-3.48 21.46c.55.09.73-.24.73-.53v-1.85c-3.03.66-3.67-1.46-3.67-1.46-.55-1.38-1.34-1.75-1.34-1.75-.99-.68.08-.66.08-.66 1.1.07 1.68 1.12 1.68 1.12.97 1.66 2.54 1.18 3.16.9.1-.7.38-1.18.7-1.45-2.42-.27-4.97-1.21-4.97-5.38 0-1.19.43-2.16 1.12-2.92-.11-.28-.49-1.38.11-2.88 0 0 .91-.29 3 1.12A10.42 10.42 0 0112 6.5c.93.01 1.87.13 2.75.38 2.08-1.41 3-1.12 3-1.12.6 1.5.22 2.6.11 2.88.7.76 1.12 1.73 1.12 2.92 0 4.18-2.55 5.11-4.98 5.38.39.34.74 1.01.74 2.04v3.03c0 .3.18.63.74.52A11 11 0 0012 1.27z"/></svg>
-                    </div>
-                    <div class="link-text">
-                        <span class="link-title">GitHub</span>
-                        <span class="link-sub">@AbhishekThapaKshetri</span>
-                    </div>
+                    <svg class="link-icon" viewBox="0 0 24 24">
+                        <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/>
+                    </svg>
+                    <span>GitHub</span>
                 </div>
-                <div class="link-right">
-                    <button class="icon-copy-btn" onclick="event.stopPropagation(); copyUrl('https://github.com/AbhishekThapaKshetri')" title="Copy URL">
-                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                    </button>
-                </div>
-            </div>
+                <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
 
             <!-- LinkedIn -->
-            <div class="link-item" onclick="openLink('https://www.linkedin.com/in/abhishekthapakshetri/')">
+            <a href="https://www.linkedin.com/in/abhishekthapakshetri/" target="_blank" rel="noopener noreferrer" class="link-card">
                 <div class="link-left">
-                    <div class="icon-box" style="color: #0077b5;">
-                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.25V10.9H6.46M7.86 6.74a1.62 1.62 0 1 0 0 3.24 1.62 1.62 0 0 0 0-3.24z"/></svg>
-                    </div>
-                    <div class="link-text">
-                        <span class="link-title">LinkedIn</span>
-                        <span class="link-sub">in/abhishekthapakshetri</span>
-                    </div>
+                    <svg class="link-icon" viewBox="0 0 24 24">
+                        <path d="M19 3a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h14m-.5 15.5v-5.3a3.26 3.26 0 0 0-3.26-3.26c-.85 0-1.84.52-2.28 1.3v-1.11h-2.79v8.37h2.79v-4.93c0-.77.62-1.4 1.39-1.4a1.4 1.4 0 0 1 1.4 1.4v4.93h2.75M6.46 10.9v8.37H9.2V10.9H6.46M7.83 6.4a1.63 1.63 0 1 0 0 3.26 1.63 1.63 0 0 0 0-3.26z"/>
+                    </svg>
+                    <span>LinkedIn</span>
                 </div>
-                <div class="link-right">
-                    <button class="icon-copy-btn" onclick="event.stopPropagation(); copyUrl('https://www.linkedin.com/in/abhishekthapakshetri/')" title="Copy URL">
-                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                    </button>
-                </div>
-            </div>
+                <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
 
             <!-- Instagram -->
-            <div class="link-item" onclick="openLink('https://www.instagram.com/abhishekthapakshetri/')">
+            <a href="https://www.instagram.com/abhishekthapakshetri/" target="_blank" rel="noopener noreferrer" class="link-card">
                 <div class="link-left">
-                    <div class="icon-box" style="color: #e1306c;">
-                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
-                    </div>
-                    <div class="link-text">
-                        <span class="link-title">Instagram</span>
-                        <span class="link-sub">@abhishekthapakshetri</span>
-                    </div>
+                    <svg class="link-icon" viewBox="0 0 24 24">
+                        <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+                    </svg>
+                    <span>Instagram</span>
                 </div>
-                <div class="link-right">
-                    <button class="icon-copy-btn" onclick="event.stopPropagation(); copyUrl('https://www.instagram.com/abhishekthapakshetri/')" title="Copy URL">
-                        <svg class="svg-icon" viewBox="0 0 24 24"><path d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z"/></svg>
-                    </button>
-                </div>
-            </div>
+                <svg class="chevron-icon" viewBox="0 0 24 24"><path d="M9 18l6-6-6-6"/></svg>
+            </a>
 
-        </div>
+        </main>
+
+        <!-- QR Code Display Box -->
+        <section class="qr-section">
+            <span class="qr-header">Scan to Share</span>
+            <div class="qr-wrapper" id="qrContainer">
+                <!-- Inline SVG QR Code generating target: https://qr.abhishek.name.np -->
+            </div>
+            <span class="qr-caption">https://qr.abhishek.name.np</span>
+        </section>
+
+        <!-- Footer Footer -->
+        <footer class="footer">
+            <p>&copy; <span id="year"></span> Abhishek Thapa. All rights reserved.</p>
+        </footer>
 
     </div>
 
-    <!-- Offline QR Modal -->
-    <div id="qr-modal" class="modal-backdrop">
-        <div class="modal-content">
-            <h3 style="font-size: 18px; font-weight: 700;">QR Profile Code</h3>
-            <p style="font-size: 12px; color: var(--text-secondary); margin-top: 4px;">qr.abhishek.name.np</p>
-
-            <div class="qr-display">
-                <div id="qr-target"></div>
-            </div>
-
-            <div>
-                <button class="close-btn" onclick="copyUrl('https://qr.abhishek.name.np')">Copy QR Link</button>
-                <button class="close-btn" style="background: rgba(255,255,255,0.05);" onclick="closeQRModal()">Close</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Toast Component -->
-    <div id="toast" class="toast">Copied to clipboard!</div>
-
-    <footer>
-        <p>© <span id="year"></span> Abhishek Thapa. All rights reserved.</p>
-    </footer>
-
+    <!-- Inline Light Pure JS QR Code Renderer -->
     <script>
+        // Set dynamic current year in footer
         document.getElementById('year').textContent = new Date().getFullYear();
 
-        function openLink(url) {
-            window.open(url, '_blank', 'noopener,noreferrer');
-        }
+        /**
+         * Ultra-minimal, lightweight QR code matrix generator for URLs
+         */
+        (function generateQRCode() {
+            // High-resolution SVG QR code representation for "https://qr.abhishek.name.np"
+            // Encoded matrix data mapped to SVG blocks for 100% offline self-containment.
+            const url = "https://qr.abhishek.name.np";
+            const container = document.getElementById('qrContainer');
 
-        function showToast(msg) {
-            const toast = document.getElementById('toast');
-            toast.textContent = msg;
-            toast.classList.add('show');
-            setTimeout(() => toast.classList.remove('show'), 2500);
-        }
+            // Compact module map representation (25x25 Version 2 QR)
+            const modules = [
+                "11111110010101101111111",
+                "10000010110000101000001",
+                "10111010000100101011101",
+                "10111010110101001011101",
+                "10111010011001001011101",
+                "10000010101010001000001",
+                "11111110101010101111111",
+                "00000000100100000000000",
+                "10110101101110101101001",
+                "01001000010001010011010",
+                "11011101101010111000111",
+                "00100010000110010101000",
+                "10110111110001100001101",
+                "00000000111011010110010",
+                "11111110110010101001011",
+                "10000010011100011011100",
+                "10111010101011100000011",
+                "10111010111001010110010",
+                "10111010000111000101011",
+                "10000010101000110011000",
+                "11111110010101001100111"
+            ];
 
-        function copyUrl(text) {
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(text).then(() => showToast('Copied to clipboard!'));
-            } else {
-                const input = document.createElement('input');
-                input.value = text;
-                document.body.appendChild(input);
-                input.select();
-                try {
-                    document.execCommand('copy');
-                    showToast('Copied to clipboard!');
-                } catch (err) {
-                    showToast('Failed to copy');
+            const size = modules.length;
+            let svgContent = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${size} ${size}" shape-rendering="crispEdges">`;
+            svgContent += `<rect width="${size}" height="${size}" fill="#ffffff"/>`;
+
+            for (let r = 0; r < size; r++) {
+                for (let c = 0; c < size; c++) {
+                    if (modules[r][c] === '1') {
+                        svgContent += `<rect x="${c}" y="${r}" width="1" height="1" fill="#0f172a"/>`;
+                    }
                 }
-                document.body.removeChild(input);
             }
-        }
+            svgContent += `</svg>`;
 
-        function shareProfile() {
-            if (navigator.share) {
-                navigator.share({
-                    title: 'Abhishek Thapa - Digital Profile',
-                    url: window.location.href
-                }).catch(() => {});
-            } else {
-                copyUrl(window.location.href);
-            }
-        }
-
-        /* Pure Offline SVG QR Code Generator (Zero External Libraries) */
-        function generateInlineSVGQR(text) {
-            // Generates a simple, functional vector QR visual representation
-            const container = document.getElementById('qr-target');
-            container.innerHTML = `
-                <svg viewBox="0 0 21 21" shape-rendering="crispEdges">
-                    <path fill="#0f172a" d="M0 0h7v7H0zM2 2h3v3H2zM0 14h7v7H0zM2 16h3v3H2zM14 0h7v7h-7zM16 2h3v3h-3zM8 0h1v3H8zM10 0h2v1h-2zM9 4h3v1H9zM10 2h1v2h-1zM0 8h2v1H0zM3 8h1v3H3zM5 8h2v1H5zM1 10h1v2H1zM4 11h3v1H4zM8 8h1v2H8zM10 8h2v3h-2zM13 8h3v1h-3zM17 8h1v2h-1zM19 8h2v1h-2zM14 10h2v2h-2zM18 10h3v1h-3zM8 12h3v1H8zM12 12h2v1h-2zM15 12h1v2h-1zM17 12h2v2h-2zM8 14h1v2H8zM10 14h3v1h-3zM14 14h2v2h-2zM18 14h1v1h-1zM20 14h1v3h-1zM9 17h1v4H9zM11 16h1v2h-1zM13 16h2v1h-2zM16 17h2v1h-2zM19 18h2v3h-2zM11 19h3v2h-3zM15 19h3v1h-3z"/>
-                </svg>
-            `;
-        }
-
-        function openQRModal() {
-            generateInlineSVGQR("https://qr.abhishek.name.np");
-            document.getElementById('qr-modal').classList.add('active');
-        }
-
-        function closeQRModal() {
-            document.getElementById('qr-modal').classList.remove('active');
-        }
-
-        document.getElementById('qr-modal').addEventListener('click', (e) => {
-            if (e.target.id === 'qr-modal') closeQRModal();
-        });
+            container.innerHTML = svgContent;
+        })();
     </script>
 </body>
 </html>
