@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abhishek Thapa | Link in Bio & Digital Business Card</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    colors: {
+                        brand: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- QR Code Generator Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <!-- Canvas Confetti for interactions -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            transition: background-color 0.3s, color 0.3s;
+        }
+        
+        .glass-card {
+            background: rgba(255, 255, 255, 0.7);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+        }
+        
+        .dark .glass-card {
+            background: rgba(18, 24, 38, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        
+        .glass-card-hover {
+            transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        
+        .glass-card-hover:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 24px -10px rgba(0, 0, 0, 0.15);
+        }
+
+        .dark .glass-card-hover:hover {
+            box-shadow: 0 12px 24px -10px rgba(14, 165, 233, 0.2);
+        }
+
+        /* Custom Toast Animation */
+        @keyframes slideUp {
+            from { transform: translateY(100%) translateX(-50%); opacity: 0; }
+            to { transform: translateY(0) translateX(-50%); opacity: 1; }
+        }
+        .toast-animate {
+            animation: slideUp 0.3s ease-out forwards;
+        }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-950 dark:text-slate-100 min-h-screen flex flex-col items-center justify-between p-4 sm:p-6 transition-colors duration-300">
+
+    <!-- Top Action Navigation Bar -->
+    <header class="w-full max-w-lg flex items-center justify-between py-2 px-1 mb-4">
+        <!-- Analytics Toggle Button -->
+        <button id="open-analytics-btn" class="flex items-center gap-2 text-xs font-medium bg-slate-200/80 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 px-3 py-1.5 rounded-full backdrop-blur-md transition-all text-slate-700 dark:text-slate-300 shadow-sm" title="View Analytics">
+            <span class="relative flex h-2 w-2">
+              <span class="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </span>
+            <i class="fa-solid fa-chart-line"></i>
+            <span>Views: <strong id="header-visit-count" class="text-slate-900 dark:text-white">...</strong></span>
+        </button>
+
+        <div class="flex items-center gap-2">
+            <!-- Share Main Profile Button -->
+            <button id="share-profile-btn" class="p-2 rounded-full bg-slate-200/80 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all text-sm shadow-sm" title="Share Profile">
+                <i class="fa-solid fa-share-nodes"></i>
+            </button>
+
+            <!-- Dark / Light Mode Toggle -->
+            <button id="theme-toggle" class="p-2 rounded-full bg-slate-200/80 dark:bg-slate-800/80 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-300 transition-all text-sm shadow-sm" title="Toggle Theme">
+                <i id="theme-toggle-dark-icon" class="fa-solid fa-moon hidden"></i>
+                <i id="theme-toggle-light-icon" class="fa-solid fa-sun"></i>
+            </button>
+        </div>
+    </header>
+
+    <main class="w-full max-w-lg flex-1 flex flex-col items-center">
+        <!-- Profile Banner / Header Card -->
+        <div class="w-full glass-card rounded-3xl p-6 mb-6 text-center shadow-lg relative overflow-hidden">
+            <!-- Background Glow Decor -->
+            <div class="absolute -top-12 -left-12 w-32 h-32 bg-sky-500/20 rounded-full blur-2xl pointer-events-none"></div>
+            <div class="absolute -bottom-12 -right-12 w-32 h-32 bg-indigo-500/20 rounded-full blur-2xl pointer-events-none"></div>
+
+            <!-- Avatar Container -->
+            <div class="relative w-28 h-28 mx-auto mb-4 group">
+                <div class="w-full h-full rounded-full overflow-hidden border-4 border-white dark:border-slate-800 shadow-md transition-transform duration-300 group-hover:scale-105 bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center">
+                    <img id="profile-avatar" src="https://github.com/AbhishekThapaKshetri.png" alt="Abhishek Thapa" class="w-full h-full object-cover" onerror="this.style.display='none'; document.getElementById('avatar-fallback').classList.remove('hidden');">
+                    <span id="avatar-fallback" class="hidden text-3xl font-extrabold text-white">AT</span>
+                </div>
+                <!-- Verified Badge -->
+                <div class="absolute bottom-1 right-1 bg-sky-500 text-white rounded-full w-7 h-7 flex items-center justify-center border-2 border-white dark:border-slate-900 shadow-md" title="Verified Profile">
+                    <i class="fa-solid fa-check text-xs"></i>
+                </div>
+            </div>
+
+            <!-- Name and Tagline -->
+            <h1 class="text-2xl font-bold tracking-tight text-slate-900 dark:text-white flex items-center justify-center gap-2">
+                Abhishek Thapa
+            </h1>
+            <p class="text-xs font-semibold uppercase tracking-wider text-sky-600 dark:text-sky-400 mt-1">
+                Tech Entrepreneur & Developer
+            </p>
+            <p class="text-sm text-slate-600 dark:text-slate-400 mt-2 max-w-xs mx-auto leading-relaxed">
+                Founder at <span class="text-slate-800 dark:text-slate-200 font-semibold">Nirdist Group</span>. Building digital solutions and innovative platforms.
+            </p>
+
+            <!-- Quick Action Badges -->
+            <div class="flex items-center justify-center gap-3 mt-4 pt-4 border-t border-slate-200/60 dark:border-slate-800/60 text-xs text-slate-500 dark:text-slate-400">
+                <span class="flex items-center gap-1"><i class="fa-solid fa-location-dot text-rose-500"></i> Nepal</span>
+                <span class="inline-block w-1 h-1 bg-slate-400 rounded-full"></span>
+                <span class="flex items-center gap-1"><i class="fa-solid fa-building text-amber-500"></i> Nirdist</span>
+                <span class="inline-block w-1 h-1 bg-slate-400 rounded-full"></span>
+                <span class="flex items-center gap-1"><i class="fa-solid fa-globe text-emerald-500"></i> Portfolio</span>
+            </div>
+        </div>
+
+        <!-- Links List -->
+        <div class="w-full space-y-3.5 mb-8">
+            
+            <!-- Link 1: Portfolio Website -->
+            <div class="glass-card glass-card-hover rounded-2xl p-4 flex items-center justify-between gap-4 group cursor-pointer relative overflow-hidden" onclick="handleLinkClick('Portfolio', 'https://www.abhishek.name.np')">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-500 to-cyan-500 flex items-center justify-center text-white text-xl shadow-md group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-globe"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-semibold text-slate-900 dark:text-white text-sm sm:text-base group-hover:text-sky-500 transition-colors">
+                            Personal Website & Portfolio
+                        </h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">abhishek.name.np</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="event.stopPropagation(); copyToClipboard('https://www.abhishek.name.np', 'Website URL copied!')" class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" title="Copy Link">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                    <div class="text-slate-400 group-hover:translate-x-1 transition-transform text-sm">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Link 2: Company / Nirdist -->
+            <div class="glass-card glass-card-hover rounded-2xl p-4 flex items-center justify-between gap-4 group cursor-pointer relative overflow-hidden border-l-4 border-l-indigo-500" onclick="handleLinkClick('Nirdist Company', 'https://www.nirdist.com')">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-600 to-purple-600 flex items-center justify-center text-white text-xl shadow-md group-hover:scale-105 transition-transform">
+                        <i class="fa-solid fa-building-user"></i>
+                    </div>
+                    <div>
+                        <div class="flex items-center gap-2">
+                            <h2 class="font-semibold text-slate-900 dark:text-white text-sm sm:text-base group-hover:text-indigo-400 transition-colors">
+                                Nirdist Group
+                            </h2>
+                            <span class="bg-indigo-100 text-indigo-700 dark:bg-indigo-950/80 dark:text-indigo-300 text-[10px] font-bold px-2 py-0.5 rounded-full border border-indigo-300 dark:border-indigo-800">Company</span>
+                        </div>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">nirdist.com</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="event.stopPropagation(); copyToClipboard('https://www.nirdist.com', 'Company link copied!')" class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" title="Copy Link">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                    <div class="text-slate-400 group-hover:translate-x-1 transition-transform text-sm">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Link 3: GitHub -->
+            <div class="glass-card glass-card-hover rounded-2xl p-4 flex items-center justify-between gap-4 group cursor-pointer relative overflow-hidden" onclick="handleLinkClick('GitHub', 'https://github.com/AbhishekThapaKshetri')">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-slate-900 dark:bg-slate-800 text-white flex items-center justify-center text-xl shadow-md group-hover:scale-105 transition-transform">
+                        <i class="fa-brands fa-github"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-semibold text-slate-900 dark:text-white text-sm sm:text-base group-hover:text-sky-500 transition-colors">
+                            GitHub
+                        </h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">@AbhishekThapaKshetri</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="event.stopPropagation(); copyToClipboard('https://github.com/AbhishekThapaKshetri', 'GitHub link copied!')" class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" title="Copy Link">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                    <div class="text-slate-400 group-hover:translate-x-1 transition-transform text-sm">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Link 4: LinkedIn -->
+            <div class="glass-card glass-card-hover rounded-2xl p-4 flex items-center justify-between gap-4 group cursor-pointer relative overflow-hidden" onclick="handleLinkClick('LinkedIn', 'https://www.linkedin.com/in/abhishekthapakshetri/')">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-blue-600 to-blue-800 flex items-center justify-center text-white text-xl shadow-md group-hover:scale-105 transition-transform">
+                        <i class="fa-brands fa-linkedin-in"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-semibold text-slate-900 dark:text-white text-sm sm:text-base group-hover:text-blue-500 transition-colors">
+                            LinkedIn
+                        </h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">in/abhishekthapakshetri</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="event.stopPropagation(); copyToClipboard('https://www.linkedin.com/in/abhishekthapakshetri/', 'LinkedIn link copied!')" class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" title="Copy Link">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                    <div class="text-slate-400 group-hover:translate-x-1 transition-transform text-sm">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Link 5: Instagram -->
+            <div class="glass-card glass-card-hover rounded-2xl p-4 flex items-center justify-between gap-4 group cursor-pointer relative overflow-hidden" onclick="handleLinkClick('Instagram', 'https://www.instagram.com/abhishekthapakshetri/')">
+                <div class="flex items-center gap-4">
+                    <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-amber-500 via-rose-500 to-purple-600 flex items-center justify-center text-white text-xl shadow-md group-hover:scale-105 transition-transform">
+                        <i class="fa-brands fa-instagram"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-semibold text-slate-900 dark:text-white text-sm sm:text-base group-hover:text-rose-500 transition-colors">
+                            Instagram
+                        </h2>
+                        <p class="text-xs text-slate-500 dark:text-slate-400">@abhishekthapakshetri</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-2">
+                    <button onclick="event.stopPropagation(); copyToClipboard('https://www.instagram.com/abhishekthapakshetri/', 'Instagram link copied!')" class="p-2 rounded-lg text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 hover:bg-slate-200/50 dark:hover:bg-slate-800/50 transition-colors" title="Copy Link">
+                        <i class="fa-regular fa-copy"></i>
+                    </button>
+                    <div class="text-slate-400 group-hover:translate-x-1 transition-transform text-sm">
+                        <i class="fa-solid fa-chevron-right"></i>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- QR Code Section -->
+        <div class="w-full glass-card rounded-3xl p-6 mb-8 text-center shadow-lg relative">
+            <div class="flex items-center justify-between mb-4 border-b border-slate-200/60 dark:border-slate-800/60 pb-3">
+                <div class="flex items-center gap-2">
+                    <i class="fa-solid fa-qrcode text-sky-500 text-lg"></i>
+                    <h3 class="font-bold text-slate-900 dark:text-white text-base">QR Digital Card</h3>
+                </div>
+                <span class="text-xs bg-slate-200 dark:bg-slate-800 text-slate-600 dark:text-slate-400 px-2.5 py-1 rounded-full font-mono">
+                    qr.abhishek.name.np
+                </span>
+            </div>
+
+            <p class="text-xs text-slate-500 dark:text-slate-400 mb-4">
+                Scan this QR code with a camera to quickly open and share this profile link.
+            </p>
+
+            <!-- QR Code Render Container -->
+            <div class="flex flex-col items-center justify-center mb-4">
+                <div class="p-4 bg-white rounded-2xl shadow-inner border border-slate-200 dark:border-slate-700 flex items-center justify-center">
+                    <div id="qrcode"></div>
+                </div>
+            </div>
+
+            <!-- QR Actions -->
+            <div class="flex items-center justify-center gap-3">
+                <button onclick="copyToClipboard('https://qr.abhishek.name.np', 'QR Link copied to clipboard!')" class="px-4 py-2 text-xs font-semibold rounded-xl bg-slate-200 dark:bg-slate-800 hover:bg-slate-300 dark:hover:bg-slate-700 text-slate-700 dark:text-slate-200 transition-all flex items-center gap-2">
+                    <i class="fa-regular fa-copy"></i> Copy QR URL
+                </button>
+                <button onclick="downloadQRCode()" class="px-4 py-2 text-xs font-semibold rounded-xl bg-sky-500 hover:bg-sky-600 text-white transition-all shadow-md shadow-sky-500/20 flex items-center gap-2">
+                    <i class="fa-solid fa-download"></i> Save QR Image
+                </button>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="w-full max-w-lg text-center py-4 border-t border-slate-200/60 dark:border-slate-800/60 text-xs text-slate-500 dark:text-slate-400">
+        <p>© <span id="current-year"></span> Abhishek Thapa. All rights reserved.</p>
+        <p class="mt-1 text-[11px] text-slate-400 dark:text-slate-500">
+            Hosted on <a href="https://www.abhishek.name.np" class="hover:underline text-sky-500">abhishek.name.np</a>
+        </p>
+    </footer>
+
+    <!-- Analytics Dashboard Modal -->
+    <div id="analytics-modal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden opacity-0 transition-opacity duration-300">
+        <div class="glass-card bg-white dark:bg-slate-900 rounded-3xl w-full max-w-md p-6 shadow-2xl border border-slate-200 dark:border-slate-800 relative transform scale-95 transition-transform duration-300" id="analytics-modal-content">
+            
+            <!-- Close Modal -->
+            <button id="close-analytics-btn" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 dark:hover:text-slate-200 p-2 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+
+            <!-- Header -->
+            <div class="flex items-center gap-3 mb-6">
+                <div class="w-10 h-10 rounded-xl bg-sky-500/10 text-sky-500 flex items-center justify-center text-lg">
+                    <i class="fa-solid fa-chart-pie"></i>
+                </div>
+                <div>
+                    <h3 class="text-lg font-bold text-slate-900 dark:text-white">Visitor Analytics</h3>
+                    <p class="text-xs text-slate-500 dark:text-slate-400">Real-time profile performance</p>
+                </div>
+            </div>
+
+            <!-- Stats Grid -->
+            <div class="grid grid-cols-2 gap-3 mb-6">
+                <div class="p-3.5 bg-slate-100 dark:bg-slate-800/60 rounded-2xl border border-slate-200/60 dark:border-slate-700/50">
+                    <span class="text-xs text-slate-500 dark:text-slate-400 block mb-1">Total Pageviews</span>
+                    <span id="modal-total-views" class="text-2xl font-black text-slate-900 dark:text-white">0</span>
+                </div>
+                <div class="p-3.5 bg-slate-100 dark:bg-slate-800/60 rounded-2xl border border-slate-200/60 dark:border-slate-700/50">
+                    <span class="text-xs text-slate-500 dark:text-slate-400 block mb-1">Unique Sessions</span>
+                    <span id="modal-unique-sessions" class="text-2xl font-black text-sky-500">0</span>
+                </div>
+                <div class="p-3.5 bg-slate-100 dark:bg-slate-800/60 rounded-2xl border border-slate-200/60 dark:border-slate-700/50">
+                    <span class="text-xs text-slate-500 dark:text-slate-400 block mb-1">Link Clicks</span>
+                    <span id="modal-link-clicks" class="text-2xl font-black text-indigo-500">0</span>
+                </div>
+                <div class="p-3.5 bg-slate-100 dark:bg-slate-800/60 rounded-2xl border border-slate-200/60 dark:border-slate-700/50">
+                    <span class="text-xs text-slate-500 dark:text-slate-400 block mb-1">Device Type</span>
+                    <span id="modal-device-type" class="text-sm font-bold text-slate-900 dark:text-white mt-1 block">Desktop</span>
+                </div>
+            </div>
+
+            <!-- Details Section -->
+            <div class="space-y-3">
+                <div class="text-xs font-semibold text-slate-700 dark:text-slate-300 flex items-center justify-between">
+                    <span>Recent Session Details</span>
+                    <span class="text-[10px] text-slate-400">Live Browser Session</span>
+                </div>
+                <div class="p-3 bg-slate-50 dark:bg-slate-950/50 rounded-xl text-xs space-y-2 border border-slate-200/60 dark:border-slate-800/60 font-mono text-slate-600 dark:text-slate-400">
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">First Visit:</span>
+                        <span id="stat-first-visit">--</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">Last Active:</span>
+                        <span id="stat-last-visit">--</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-slate-400">Browser:</span>
+                        <span id="stat-browser">--</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Footer Action -->
+            <div class="mt-6 flex gap-2">
+                <button onclick="resetAnalytics()" class="w-full py-2.5 rounded-xl border border-rose-300 dark:border-rose-900/50 text-rose-600 dark:text-rose-400 hover:bg-rose-50 dark:hover:bg-rose-950/30 text-xs font-semibold transition-colors">
+                    Reset Local Stats
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notification Element -->
+    <div id="toast" class="fixed bottom-6 left-1/2 -translate-x-1/2 bg-slate-900 dark:bg-white text-white dark:text-slate-900 px-4 py-2.5 rounded-full shadow-2xl text-xs font-semibold flex items-center gap-2 z-50 pointer-events-none hidden">
+        <i class="fa-solid fa-circle-check text-emerald-400 dark:text-emerald-600 text-sm"></i>
+        <span id="toast-message">Copied to clipboard!</span>
+    </div>
+
+    <script>
+        // Set Year
+        document.getElementById('current-year').textContent = new Date().getFullYear();
+
+        // Target URL for the QR Code
+        const QR_TARGET_URL = "https://qr.abhishek.name.np";
+
+        // Initialize QR Code
+        let qrCodeInstance = null;
+        function initQRCode() {
+            const qrContainer = document.getElementById("qrcode");
+            qrContainer.innerHTML = ""; // Clear
+            qrCodeInstance = new QRCode(qrContainer, {
+                text: QR_TARGET_URL,
+                width: 140,
+                height: 140,
+                colorDark : "#0f172a",
+                colorLight : "#ffffff",
+                correctLevel : QRCode.CorrectLevel.H
+            });
+        }
+
+        // Download QR Code Action
+        function downloadQRCode() {
+            const img = document.querySelector("#qrcode img");
+            if (img && img.src) {
+                const link = document.createElement("a");
+                link.href = img.src;
+                link.download = "Abhishek-Thapa-QR.png";
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+                showToast("QR Code image downloaded!");
+            } else {
+                showToast("Generating QR image, try again in a moment.");
+            }
+        }
+
+        // Toast Notification System
+        let toastTimeout;
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            const toastMsg = document.getElementById('toast-message');
+            toastMsg.textContent = message;
+            
+            toast.classList.remove('hidden');
+            toast.classList.add('toast-animate');
+
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => {
+                toast.classList.add('hidden');
+                toast.classList.remove('toast-animate');
+            }, 3000);
+        }
+
+        // Clipboard Helper
+        function copyToClipboard(text, successMsg = 'Copied to clipboard!') {
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast(successMsg);
+                });
+            } else {
+                const textArea = document.createElement("textarea");
+                textArea.value = text;
+                textArea.style.position = "fixed";
+                textArea.style.left = "-999999px";
+                document.body.appendChild(textArea);
+                textArea.focus();
+                textArea.select();
+                try {
+                    document.execCommand('copy');
+                    showToast(successMsg);
+                } catch (error) {
+                    showToast('Failed to copy');
+                }
+                document.body.removeChild(textArea);
+            }
+        }
+
+        // --- Visitor Analytics Engine ---
+        function initAnalytics() {
+            const now = new Date();
+            let analytics = JSON.parse(localStorage.getItem('abhishek_analytics')) || {
+                totalViews: 0,
+                uniqueSessions: 0,
+                linkClicks: 0,
+                firstVisit: now.toLocaleString(),
+                lastVisit: now.toLocaleString(),
+                sessionId: null
+            };
+
+            // Check if current session is unique
+            const currentSession = sessionStorage.getItem('active_session');
+            if (!currentSession) {
+                analytics.uniqueSessions += 1;
+                sessionStorage.setItem('active_session', 'sess_' + Date.now());
+            }
+
+            analytics.totalViews += 1;
+            analytics.lastVisit = now.toLocaleString();
+
+            localStorage.setItem('abhishek_analytics', JSON.stringify(analytics));
+            updateAnalyticsUI(analytics);
+        }
+
+        function updateAnalyticsUI(data) {
+            document.getElementById('header-visit-count').textContent = data.totalViews;
+            document.getElementById('modal-total-views').textContent = data.totalViews;
+            document.getElementById('modal-unique-sessions').textContent = data.uniqueSessions;
+            document.getElementById('modal-link-clicks').textContent = data.linkClicks;
+            
+            document.getElementById('stat-first-visit').textContent = data.firstVisit;
+            document.getElementById('stat-last-visit').textContent = data.lastVisit;
+            
+            // Detect Browser
+            const userAgent = navigator.userAgent;
+            let browser = "Unknown Browser";
+            if (userAgent.includes("Chrome")) browser = "Google Chrome";
+            else if (userAgent.includes("Safari")) browser = "Apple Safari";
+            else if (userAgent.includes("Firefox")) browser = "Mozilla Firefox";
+            else if (userAgent.includes("Edg")) browser = "Microsoft Edge";
+
+            document.getElementById('stat-browser').textContent = browser;
+
+            // Detect Device
+            const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+            document.getElementById('modal-device-type').textContent = isMobile ? 'Mobile Phone' : 'Desktop / Laptop';
+        }
+
+        function handleLinkClick(linkName, url) {
+            // Track click
+            let analytics = JSON.parse(localStorage.getItem('abhishek_analytics')) || {};
+            analytics.linkClicks = (analytics.linkClicks || 0) + 1;
+            localStorage.setItem('abhishek_analytics', JSON.stringify(analytics));
+            updateAnalyticsUI(analytics);
+
+            // Trigger confetti effect
+            if (typeof confetti === 'function') {
+                confetti({
+                    particleCount: 25,
+                    spread: 60,
+                    origin: { y: 0.8 }
+                });
+            }
+
+            // Navigate
+            setTimeout(() => {
+                window.open(url, '_blank');
+            }, 150);
+        }
+
+        function resetAnalytics() {
+            localStorage.removeItem('abhishek_analytics');
+            sessionStorage.removeItem('active_session');
+            initAnalytics();
+            showToast('Analytics reset successfully!');
+        }
+
+        // --- Theme Engine ---
+        function initTheme() {
+            const themeToggleBtn = document.getElementById('theme-toggle');
+            const darkIcon = document.getElementById('theme-toggle-dark-icon');
+            const lightIcon = document.getElementById('theme-toggle-light-icon');
+
+            // Default dark theme preference
+            if (localStorage.getItem('color-theme') === 'light' || (!('color-theme' in localStorage) && window.matchMedia('(prefers-color-scheme: light)').matches)) {
+                document.documentElement.classList.remove('dark');
+                darkIcon.classList.remove('hidden');
+                lightIcon.classList.add('hidden');
+            } else {
+                document.documentElement.classList.add('dark');
+                lightIcon.classList.remove('hidden');
+                darkIcon.classList.add('hidden');
+            }
+
+            themeToggleBtn.addEventListener('click', function() {
+                darkIcon.classList.toggle('hidden');
+                lightIcon.classList.toggle('hidden');
+
+                if (document.documentElement.classList.contains('dark')) {
+                    document.documentElement.classList.remove('dark');
+                    localStorage.setItem('color-theme', 'light');
+                } else {
+                    document.documentElement.classList.add('dark');
+                    localStorage.setItem('color-theme', 'dark');
+                }
+            });
+        }
+
+        // --- Analytics Modal Handlers ---
+        function initModal() {
+            const modal = document.getElementById('analytics-modal');
+            const modalContent = document.getElementById('analytics-modal-content');
+            const openBtn = document.getElementById('open-analytics-btn');
+            const closeBtn = document.getElementById('close-analytics-btn');
+
+            function openModal() {
+                modal.classList.remove('hidden');
+                setTimeout(() => {
+                    modal.classList.remove('opacity-0');
+                    modalContent.classList.remove('scale-95');
+                }, 10);
+            }
+
+            function closeModal() {
+                modal.classList.add('opacity-0');
+                modalContent.classList.add('scale-95');
+                setTimeout(() => {
+                    modal.classList.add('hidden');
+                }, 300);
+            }
+
+            openBtn.addEventListener('click', openModal);
+            closeBtn.addEventListener('click', closeModal);
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) closeModal();
+            });
+        }
+
+        // Main Share Button
+        document.getElementById('share-profile-btn').addEventListener('click', () => {
+            if (navigator.share) {
+                navigator.share({
+                    title: 'Abhishek Thapa - Profile',
+                    text: 'Check out Abhishek Thapa\'s profile and links!',
+                    url: window.location.href
+                }).catch(() => {});
+            } else {
+                copyToClipboard(window.location.href, 'Profile page link copied!');
+            }
+        });
+
+        // Initialize Everything on Load
+        window.addEventListener('DOMContentLoaded', () => {
+            initTheme();
+            initQRCode();
+            initAnalytics();
+            initModal();
+        });
+    </script>
+</body>
+</html>
